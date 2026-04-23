@@ -1,0 +1,454 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:VendingSystemClient.ViewModels"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="1280" d:DesignHeight="800"
+             x:Class="VendingSystemClient.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Border.Card">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BoxShadow" Value="0 2 8 0 #15000000"/>
+        </Style>
+        <Style Selector="Border.SideItem">
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Margin" Value="8,2"/>
+        </Style>
+        <Style Selector="Button.SideBtn">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="50,46,*">
+
+<Border Grid.Row="0" Background="#1a2535">
+    <Grid ColumnDefinitions="220,*,Auto" Margin="0,0,20,0">
+        <TextBlock Grid.Column="0" Text="Лого"
+                   Foreground="White" FontSize="22" FontWeight="Bold"
+                   VerticalAlignment="Center" Margin="22,0"
+                   LetterSpacing="1"/>
+
+        <Panel Grid.Column="2" VerticalAlignment="Center">
+            
+            <Button Command="{Binding ToggleProfileMenuCommand}"
+                    Background="Transparent" Padding="8,6"
+                    BorderThickness="0">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Border Width="34" Height="34" CornerRadius="17"
+                            Background="#2196F3">
+                        <TextBlock Text="A" Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="15" FontWeight="Bold"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center" Spacing="1">
+                        <TextBlock Text="{Binding UserName}"
+                                   Foreground="White" FontSize="13"
+                                   FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding UserRole}"
+                                   Foreground="#7a9bbf" FontSize="11"/>
+                    </StackPanel>
+                    <TextBlock Text="∧" Foreground="#7a9bbf" FontSize="12"
+                               VerticalAlignment="Center" Margin="4,0,0,0"
+                               IsVisible="{Binding ProfileMenuOpen}"/>
+                    <TextBlock Text="∨" Foreground="#7a9bbf" FontSize="12"
+                               VerticalAlignment="Center" Margin="4,0,0,0"
+                               IsVisible="{Binding !ProfileMenuOpen}"/>
+                </StackPanel>
+            </Button>
+
+            <Popup IsOpen="{Binding ProfileMenuOpen}"
+                   PlacementMode="Bottom"
+                   PlacementTarget="{Binding RelativeSource={RelativeSource Self}}"
+                   HorizontalOffset="0"
+                   VerticalOffset="4">
+                <Border Background="White" CornerRadius="8"
+                        BoxShadow="0 4 20 0 #44000000"
+                        Padding="0,6" MinWidth="220">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="12"
+                                    Margin="14,8,14,8">
+                            <Border Width="38" Height="38" CornerRadius="19"
+                                    Background="#2196F3">
+                                <TextBlock Text="A" Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="15" FontWeight="Bold"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Text="{Binding UserName}"
+                                           FontSize="13" FontWeight="SemiBold"
+                                           Foreground="#1a2535"/>
+                                <TextBlock Text="{Binding UserRole}"
+                                           FontSize="11" Foreground="#999"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Border Height="1" Background="#f0f0f0" Margin="0,2"/>
+
+                        <Button Background="Transparent"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Padding="14,10" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="👤" FontSize="13"/>
+                                <TextBlock Text="Мой профиль"
+                                           FontSize="13" Foreground="#333"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Background="Transparent"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Padding="14,10" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="🔒" FontSize="13"/>
+                                <TextBlock Text="Мои сессии"
+                                           FontSize="13" Foreground="#333"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Border Height="1" Background="#f0f0f0" Margin="0,2"/>
+
+                        <Button Background="Transparent"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Padding="14,10" BorderThickness="0"
+                                Command="{Binding LogoutCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="⏻" FontSize="13"/>
+                                <TextBlock Text="Выход"
+                                           FontSize="13" Foreground="#e53935"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Popup>
+        </Panel>
+    </Grid>
+</Border>
+
+        <Border Grid.Row="1" Background="#22334a">
+            <Grid ColumnDefinitions="220,*,Auto" Margin="0,0,24,0">
+                <Button Grid.Column="0" Content="☰"
+                        Background="Transparent" Foreground="White"
+                        FontSize="17" Padding="22,0"
+                        VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="ООО Торговые Автоматы"
+                           Foreground="White" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center" Margin="6,0"/>
+                <TextBlock Grid.Column="2" Text="Главная"
+                           Foreground="#7a9bbf" FontSize="12"
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" ColumnDefinitions="220,*">
+
+            <Border Grid.Column="0" Background="#1a2535">
+                <StackPanel Margin="0,14,0,0">
+                    <TextBlock Text="Навигация" Foreground="#344d66"
+                               FontSize="10" Margin="18,0,0,10"
+                               FontWeight="Bold" LetterSpacing="1.5"/>
+
+                    <Border Classes="SideItem" Background="#22334a">
+                        <Button x:Name="BtnHome" Classes="SideBtn">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <TextBlock Text="🔍" FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Text="Главная" Foreground="White"
+                                           FontSize="13" VerticalAlignment="Center"
+                                           FontWeight="Medium"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+                    <Border Classes="SideItem">
+    <Button x:Name="BtnMonitor" Classes="SideBtn">
+        <StackPanel Orientation="Horizontal" Spacing="12">
+            <TextBlock Text="🖥" FontSize="13" VerticalAlignment="Center"/>
+            <TextBlock Text="Монитор ТА" Foreground="#8aafc8"
+                       FontSize="13" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Button>
+</Border>
+
+                    <Border Classes="SideItem">
+                        <Button Classes="SideBtn">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <TextBlock Text="📊" FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Text="Детальные отчеты" Foreground="#8aafc8"
+                                           FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Text="›" Foreground="#344d66" FontSize="16"
+                                           VerticalAlignment="Center" Margin="2,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+                    <Border Classes="SideItem">
+                        <Button Classes="SideBtn">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <TextBlock Text="📦" FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Text="Учет ТМЦ" Foreground="#8aafc8"
+                                           FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Text="›" Foreground="#344d66" FontSize="16"
+                                           VerticalAlignment="Center" Margin="2,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+                    <Border Classes="SideItem">
+    <StackPanel>
+       <Button x:Name="BtnAdminToggle" Classes="SideBtn"
+        Command="{Binding ToggleAdminMenuCommand}">
+    <StackPanel Orientation="Horizontal" Spacing="12">
+        <TextBlock Text="⚙" FontSize="13" VerticalAlignment="Center"/>
+        <TextBlock Text="Администрирование" Foreground="#8aafc8"
+                   FontSize="13" VerticalAlignment="Center"/>
+        <TextBlock Text="∨" Foreground="#344d66" FontSize="13"
+                   VerticalAlignment="Center" Margin="4,0,0,0"
+                   IsVisible="{Binding AdminMenuOpen}"/>
+        <TextBlock Text="›" Foreground="#344d66" FontSize="13"
+                   VerticalAlignment="Center" Margin="4,0,0,0"
+                   IsVisible="{Binding !AdminMenuOpen}"/>
+    </StackPanel>
+</Button>
+
+        <StackPanel IsVisible="{Binding AdminMenuOpen}"
+                    Margin="36,0,0,6" Spacing="2">
+            <Button x:Name="BtnMachines" Classes="SideBtn" Padding="8,7">
+                <TextBlock Text="Торговые автоматы"
+                           Foreground="#7a9bbf" FontSize="12"/>
+            </Button>
+            <Button x:Name="BtnCompanies" Classes="SideBtn" Padding="8,7">
+                <TextBlock Text="Компании"
+                           Foreground="#7a9bbf" FontSize="12"/>
+            </Button>
+            <Button x:Name="BtnUsers" Classes="SideBtn" Padding="8,7">
+                <TextBlock Text="Пользователи"
+                           Foreground="#7a9bbf" FontSize="12"/>
+            </Button>
+            <Button x:Name="BtnModems" Classes="SideBtn" Padding="8,7">
+                <TextBlock Text="Модемы"
+                           Foreground="#7a9bbf" FontSize="12"/>
+            </Button>
+            <Button x:Name="BtnAdditional" Classes="SideBtn" Padding="8,7">
+                <TextBlock Text="Дополнительные"
+                           Foreground="#7a9bbf" FontSize="12"/>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Border>
+                </StackPanel>
+            </Border>
+
+            <ScrollViewer Grid.Column="1" Background="#edf0f4">
+                <StackPanel Margin="22,18" Spacing="14">
+
+                    <TextBlock Text="Личный кабинет. Главная"
+                               FontSize="20" FontWeight="SemiBold"
+                               Foreground="#18253a"/>
+
+                    <Grid ColumnDefinitions="*,*,240">
+
+                        <Border Grid.Column="0" Classes="Card"
+                                Margin="0,0,12,0" Padding="18">
+                            <StackPanel Spacing="2">
+                                <TextBlock Text="Эффективность сети"
+                                           FontSize="13" FontWeight="SemiBold"
+                                           Foreground="#444"/>
+                                <Border Height="118" Margin="0,6,0,6"
+                                        HorizontalAlignment="Center">
+                                    <Grid>
+                                        <Border Width="170" Height="85"
+                                                CornerRadius="85,85,0,0"
+                                                Background="#e8f5e9"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Bottom"/>
+                                        <Border Width="130" Height="65"
+                                                CornerRadius="65,65,0,0"
+                                                Background="White"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Bottom"
+                                                Margin="0,0,0,0"/>
+                                        <TextBlock Text="{Binding EfficiencyText}"
+                                                   FontSize="34" FontWeight="Bold"
+                                                   Foreground="#43a047"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Bottom"
+                                                   Margin="0,0,0,4"/>
+                                                   
+                                    </Grid>
+                                </Border>
+                                <TextBlock Text="{Binding WorkingMachines, StringFormat='Работающих автоматов - {0}'}"
+                                           FontSize="11" Foreground="#999"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Classes="Card"
+                                Margin="0,0,12,0" Padding="18">
+                            <StackPanel Spacing="2">
+                                <TextBlock Text="Состояние сети"
+                                           FontSize="13" FontWeight="SemiBold"
+                                           Foreground="#444"/>
+                                <lvc:PieChart Series="{Binding DonutSeries}"
+                                              Height="150"
+                                              Width="150"
+                                              HorizontalAlignment="Center"
+                                              InitialRotation="-90"
+                                              LegendPosition="Hidden"
+                                              TooltipPosition="Hidden"
+                                              Background="White"/>
+                                <Grid ColumnDefinitions="*,*,*" Margin="0,4,0,0">
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Center" Spacing="2">
+                                        <TextBlock Text="{Binding WorkingMachines}"
+                                                   Foreground="#43a047" FontWeight="Bold"
+                                                   FontSize="20" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Работает" FontSize="10"
+                                                   Foreground="#999" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" Spacing="2">
+                                        <TextBlock Text="{Binding BrokenMachines}"
+                                                   Foreground="#e53935" FontWeight="Bold"
+                                                   FontSize="20" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Не работает" FontSize="10"
+                                                   Foreground="#999" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" HorizontalAlignment="Center" Spacing="2">
+                                        <TextBlock Text="{Binding MaintenanceMachines}"
+                                                   Foreground="#1e88e5" FontWeight="Bold"
+                                                   FontSize="20" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="На обслуж." FontSize="10"
+                                                   Foreground="#999" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2" Classes="Card" Padding="18">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Сводка" FontSize="13"
+                                           FontWeight="SemiBold" Foreground="#444"
+                                           Margin="0,0,0,2"/>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="Денег в ТА"
+                                               FontSize="12" Foreground="#777"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding TotalCash}"
+                                               FontSize="12" FontWeight="SemiBold"
+                                               Foreground="#1a2535"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="Сейчас в ТА"
+                                               FontSize="12" Foreground="#777"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding TodaySales}"
+                                               FontSize="12" FontWeight="SemiBold"
+                                               Foreground="#1a2535"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="Выручка, вчера"
+                                               FontSize="12" Foreground="#777"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding YesterdaySales}"
+                                               FontSize="12" FontWeight="SemiBold"
+                                               Foreground="#1a2535"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="Инкассировано, сегодня"
+                                               FontSize="12" Foreground="#777"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding TotalSales}"
+                                               FontSize="12" FontWeight="SemiBold"
+                                               Foreground="#1a2535"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="Средний чек"
+                                               FontSize="12" Foreground="#777"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding AverageCheck}"
+                                               FontSize="12" FontWeight="SemiBold"
+                                               Foreground="#1a2535"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="Обслуживание ТА, сег."
+                                               FontSize="12" Foreground="#777"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding ServiceToday}"
+                                               FontSize="12" FontWeight="SemiBold"
+                                               Foreground="#1a2535"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,240" MinHeight="320">
+
+                        <Border Grid.Column="0" Classes="Card"
+                                Margin="0,0,12,0" Padding="18">
+                            <StackPanel Spacing="12">
+                                <StackPanel Spacing="2">
+                                    <TextBlock Text="Динамика продаж за последние 10 дней"
+                                               FontSize="13" FontWeight="SemiBold"
+                                               Foreground="#444"/>
+                                    <TextBlock Text="{Binding SalesDateRange}"
+                                               FontSize="10" Foreground="#bbb"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Button Content="По сумме" Padding="16,7"
+                                            Background="#2196F3" Foreground="White"
+                                            CornerRadius="5" FontSize="12"
+                                            Command="{Binding SwitchToAmountCommand}"/>
+                                    <Button Content="По количеству" Padding="16,7"
+                                            Background="Orange" Foreground="White"
+                                            CornerRadius="5" FontSize="12"
+                                            Command="{Binding SwitchToQuantityCommand}"/>
+                                </StackPanel>
+                                <lvc:CartesianChart Series="{Binding BarSeries}"
+                                                    XAxes="{Binding XAxes}"
+                                                    YAxes="{Binding YAxes}"
+                                                    Height="210"
+                                                    Background="White"
+                                                    TooltipPosition="Hidden"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Classes="Card" Padding="18">
+                            <StackPanel Spacing="2">
+                                <TextBlock Text="Новости" FontSize="13"
+                                           FontWeight="SemiBold" Foreground="#444"
+                                           Margin="0,0,0,8"/>
+                                <ItemsControl ItemsSource="{Binding News}">
+    <ItemsControl.ItemTemplate>
+        <DataTemplate>
+            <StackPanel Margin="0,0,0,12" Spacing="2">
+                <TextBlock Text="{Binding Date}"
+                           FontSize="10" Foreground="#bbb"/>
+                <TextBlock Text="{Binding Title}"
+                           FontSize="12" Foreground="#2196F3"
+                           TextWrapping="Wrap"
+                           LineHeight="16"
+                           Cursor="Hand"
+                           TextDecorations="Underline"/>
+            </StackPanel>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
+</ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

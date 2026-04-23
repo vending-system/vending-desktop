@@ -1,0 +1,191 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="VendingSystemClient.Views.EditMachineWindow"
+        Title="Редактирование автомата"
+        Width="860" Height="600"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        xmlns:models="clr-namespace:VendingSystemClient.Models.DTO"
+        Background="#f0f3f7">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#333"/>
+            <Setter Property="Margin" Value="0,0,0,3"/>
+        </Style>
+        <Style Selector="TextBlock.required">
+            <Setter Property="Foreground" Value="#e74c3c"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#cccccc"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="2"/>
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#cccccc"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="DatePicker">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        
+    </Window.Styles>
+
+    <ScrollViewer>
+        <Border Margin="16" Background="White" CornerRadius="4"
+                BorderBrush="#d0d7e2" BorderThickness="1">
+            <StackPanel>
+
+                <Border Background="#e8eef5" BorderBrush="#d0d7e2"
+                        BorderThickness="0,0,0,1" Padding="16,12">
+                    <TextBlock x:Name="TbTitle"
+                               FontSize="14" FontWeight="SemiBold"
+                               Foreground="#2c3e6b"
+                               FontFamily="Segoe UI, Arial, sans-serif"/>
+                </Border>
+
+                <StackPanel Margin="16" Spacing="12">
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Название ТА " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbName"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Производитель " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbManufacturer"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Модель ТА " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbModelName"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Серийный номер " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbSerial"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Инвентарный номер " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbInventory"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Страна" Classes="label"/>
+                            <TextBox x:Name="TbCountry"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Адрес " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbAddress"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Модем" Classes="label"/>
+                            <TextBox x:Name="TbModem"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Компания " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                           <ComboBox x:Name="CbCompany">
+    <ComboBox.ItemTemplate>
+        <DataTemplate x:DataType="models:CompanyDto">
+            <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+    </ComboBox.ItemTemplate>
+</ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Дата производства " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <DatePicker x:Name="DpManufacture"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Дата ввода в эксплуатацию " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <DatePicker x:Name="DpCommissioning"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Дата последней поверки" Classes="label"/>
+                            <DatePicker x:Name="DpCalibration"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Интервал поверки (мес.)" Classes="label"/>
+                            <TextBox x:Name="TbCalibrationInterval"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Ресурс (часов всего)" Classes="label"/>
+                            <TextBox x:Name="TbResourceHours"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Время обслуживания (часов)" Classes="label"/>
+                            <TextBox x:Name="TbServiceHours"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,6,0,4">
+                        <Button x:Name="BtnSave"
+                                Content="Сохранить"
+                                Padding="20,7"
+                                Background="#3d7fc1" Foreground="White"
+                                BorderThickness="0" CornerRadius="3"
+                                FontSize="12" FontFamily="Segoe UI, Arial, sans-serif"/>
+                        <Button x:Name="BtnCancel"
+                                Content="Отменить"
+                                Padding="20,7" Background="White" Foreground="Black"
+                                BorderBrush="#cccccc" BorderThickness="1"
+                                CornerRadius="3" FontSize="12"
+                                FontFamily="Segoe UI, Arial, sans-serif"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</Window>

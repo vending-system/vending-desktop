@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:VendingSystemClient.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="VendingSystemClient.Views.LoginView"
+             Background="White"
+             x:DataType="vm:LoginViewModel">
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="320">
+        <StackPanel Spacing="16">
+
+            <TextBlock Text="Вход в систему" FontSize="22" FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+
+            <StackPanel Spacing="6">
+                <TextBlock Text="Логин" Foreground="Black" />
+                <TextBox Text="{Binding Username}" Watermark="Введите логин"/>
+            </StackPanel>
+
+            <StackPanel Spacing="6">
+                <TextBlock Text="Пароль" Foreground="Black"/>
+                <TextBox Text="{Binding Password}" PasswordChar="*"
+                         Watermark="Введите пароль"/>
+            </StackPanel>
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red"
+                       IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+            <Button Content="Войти" 
+             Foreground="Black" Background="Gray" HorizontalAlignment="Stretch"
+                    Command="{Binding LoginCommand}"
+                    IsEnabled="{Binding !IsLoading}"/>
+
+            <TextBlock Text="Загрузка..." Foreground="Black" HorizontalAlignment="Center"
+                       IsVisible="{Binding IsLoading}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

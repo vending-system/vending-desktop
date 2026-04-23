@@ -1,0 +1,400 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:VendingSystemClient.ViewModels"
+             xmlns:models="clr-namespace:VendingSystemClient.Models"
+             x:Class="VendingSystemClient.Views.MachinesView"
+             x:DataType="vm:MachinesViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </UserControl.Styles>
+
+    <DockPanel Background="#f4f6f9">
+
+        <Border DockPanel.Dock="Top" Background="White"
+                Padding="16,8" BorderBrush="#e0e0e0" BorderThickness="0,0,0,1">
+            <DockPanel>
+                <Button x:Name="BtnBack"
+                        DockPanel.Dock="Left"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="4,4"
+                        VerticalAlignment="Center"
+                        Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <TextBlock Text="←" FontSize="13" Foreground="#555"/>
+                        <TextBlock Text="Назад" FontSize="12" Foreground="#555"/>
+                    </StackPanel>
+                </Button>
+                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                    <TextBlock Text="Администрирование" Foreground="#aaa" FontSize="12"/>
+                    <TextBlock Text="/" Foreground="#ccc" FontSize="12"/>
+                    <TextBlock Text="Торговые автоматы" Foreground="#555" FontSize="12"
+                               FontWeight="SemiBold"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <DockPanel Margin="16">
+            <StackPanel DockPanel.Dock="Top" Margin="0,0,0,14">
+                <TextBlock Text="Торговые автоматы"
+                           FontSize="16" FontWeight="SemiBold" Foreground="#222"/>
+                <TextBlock Text="{Binding TotalInfo}"
+                           FontSize="11" Foreground="#aaa" Margin="0,2,0,0"/>
+            </StackPanel>
+
+            <Grid DockPanel.Dock="Top" Margin="0,0,0,12"
+                  ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto,Auto,Auto">
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal"
+                            Spacing="6" VerticalAlignment="Center">
+                    <TextBlock Text="Показать" FontSize="12"
+                               Foreground="#666" VerticalAlignment="Center"/>
+                    <ComboBox SelectedItem="{Binding SelectedLimit}"
+                              ItemsSource="{Binding LimitOptions}"
+                              Width="65" FontSize="12"/>
+                    <TextBlock Text="записей" FontSize="12"
+                               Foreground="#666" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <TextBox Grid.Column="1" Text="{Binding SearchText}"
+                         Watermark="Поиск..." Width="180"
+                         Margin="12,0,0,0" FontSize="12" Foreground="#333"/>
+
+                <Border Grid.Column="3"/>
+
+                <Button Grid.Column="4"
+                        Command="{Binding SwitchToTableCommand}"
+                        Padding="8,6" Margin="0,0,2,0"
+                        CornerRadius="4" BorderThickness="1"
+                        BorderBrush="#2196F3"
+                        Background="{Binding TableBtnColor}"
+                        ToolTip.Tip="Таблица">
+                    <TextBlock Text="☰" FontSize="14"
+                               Foreground="{Binding TableBtnForeground}"/>
+                </Button>
+
+                <Button Grid.Column="5"
+                        Command="{Binding SwitchToTileCommand}"
+                        Padding="8,6" Margin="0,0,10,0"
+                        CornerRadius="4" BorderThickness="1"
+                        BorderBrush="#2196F3"
+                        Background="{Binding TileBtnColor}"
+                        ToolTip.Tip="Плитки">
+                    <TextBlock Text="⊞" FontSize="14"
+                               Foreground="{Binding TileBtnForeground}"/>
+                </Button>
+
+                <Button Grid.Column="6" x:Name="BtnAdd"
+                        Padding="12,7" Margin="0,0,6,0"
+                        Background="#2196F3" Foreground="White"
+                        CornerRadius="4" FontSize="12" BorderThickness="0">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="+" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                        <TextBlock Text="Добавить" Foreground="White"/>
+                    </StackPanel>
+                </Button>
+
+<Panel Grid.Column="7">
+    <Button Padding="12,7"
+            Background="White" Foreground="#555"
+            CornerRadius="4" FontSize="12"
+            BorderBrush="#ddd" BorderThickness="1"
+            Command="{Binding ToggleExportPopupCommand}">
+        <StackPanel Orientation="Horizontal" Spacing="5">
+            <TextBlock Text="↗" Foreground="#555" FontSize="12"/>
+            <TextBlock Text="Экспорт" Foreground="#555"/>
+        </StackPanel>
+    </Button>
+
+    <Popup IsOpen="{Binding IsExportPopupOpen}"
+           Placement="Bottom"
+           IsLightDismissEnabled="True">
+        <Border Background="White" CornerRadius="6"
+                BorderBrush="#e0e0e0" BorderThickness="1"
+                BoxShadow="0 4 16 0 #1A000000"
+                Padding="4" MinWidth="160">
+            <StackPanel Spacing="2">
+
+                <Button Command="{Binding ExportToExcelCommand}"
+                        Background="Transparent" BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Padding="12,8" CornerRadius="4">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="📊" FontSize="13"/>
+                        <TextBlock Text="Excel (.xlsx)" FontSize="12" Foreground="#333"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding ExportToHtmlCommand}"
+                        Background="Transparent" BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Padding="12,8" CornerRadius="4">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="🌐" FontSize="13"/>
+                        <TextBlock Text="HTML" FontSize="12" Foreground="#333"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+        </Border>
+    </Popup>
+</Panel>
+            </Grid>
+
+            <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+                <TextBlock Grid.Column="0" Text="{Binding PageRangeInfo}"
+                           FontSize="11" Foreground="#aaa" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="3">
+                    <Button Content="‹" Padding="9,5"
+                            Command="{Binding PrevPageCommand}"
+                            IsEnabled="{Binding CanGoPrev}"
+                            Background="White" Foreground="#555"
+                            BorderBrush="#ddd" BorderThickness="1"
+                            CornerRadius="4" FontSize="13"/>
+                    <Button Content="{Binding Page}" Padding="9,5"
+                            Background="#2196F3" Foreground="White"
+                            BorderThickness="0" CornerRadius="4" FontSize="12"/>
+                    <Button Content="›" Padding="9,5"
+                            Command="{Binding NextPageCommand}"
+                            IsEnabled="{Binding CanGoNext}"
+                            Background="White" Foreground="#555"
+                            BorderBrush="#ddd" BorderThickness="1"
+                            CornerRadius="4" FontSize="13"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid>
+
+                <Border IsVisible="{Binding IsTableView}"
+                        Background="White" CornerRadius="6"
+                        BoxShadow="0 1 4 0 #10000000"
+                        BorderBrush="#e4e4e4" BorderThickness="1"
+                        ClipToBounds="True">
+                    <DockPanel>
+
+                        <Grid DockPanel.Dock="Top"
+                              ColumnDefinitions="60,*,150,170,130,170,110,110"
+                              Background="#f8f9fa">
+                            <Border Grid.ColumnSpan="8"
+                                    BorderBrush="#e4e4e4" BorderThickness="0,0,0,1"/>
+                            <TextBlock Grid.Column="0" Text="ID"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                            <TextBlock Grid.Column="1" Text="Название автомата"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                            <TextBlock Grid.Column="2" Text="Модель"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                            <TextBlock Grid.Column="3" Text="Компания"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                            <TextBlock Grid.Column="4" Text="Модем"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                            <TextBlock Grid.Column="5" Text="Адрес / Место"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                            <TextBlock Grid.Column="6" Text="В работе с"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                            <TextBlock Grid.Column="7" Text="Действия"
+                                       Padding="12,9" FontWeight="SemiBold"
+                                       FontSize="11" Foreground="#666"/>
+                        </Grid>
+
+                        <ScrollViewer>
+                            <ItemsControl ItemsSource="{Binding Machines}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="models:Machine">
+                                        <Grid ColumnDefinitions="60,*,150,170,130,170,110,110"
+                                              Background="White">
+                                            <Border Grid.ColumnSpan="8"
+                                                    BorderBrush="#f0f0f0"
+                                                    BorderThickness="0,0,0,1"
+                                                    VerticalAlignment="Bottom"/>
+                                            <TextBlock Grid.Column="0" Text="{Binding Id}"
+                                                       Padding="12,10" FontSize="12"
+                                                       Foreground="#888"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}"
+                                                       Padding="12,10" FontSize="12"
+                                                       Foreground="#2196F3" Cursor="Hand"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding ModelName}"
+                                                       Padding="12,10" FontSize="12"
+                                                       Foreground="#444"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="3" Text="{Binding Company.Name}"
+                                                       Padding="12,10" FontSize="12"
+                                                       Foreground="#2196F3" Cursor="Hand"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="4" Text="{Binding ModemId}"
+                                                       Padding="12,10" FontSize="12"
+                                                       Foreground="#444"/>
+                                            <TextBlock Grid.Column="5" Text="{Binding LocationAddress}"
+                                                       Padding="12,10" FontSize="12"
+                                                       Foreground="#444"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="6" Text="{Binding CommissioningDate}"
+                                                       Padding="12,10" FontSize="12"
+                                                       Foreground="#444"/>
+                                            <StackPanel Grid.Column="7"
+                                                        Orientation="Horizontal"
+                                                        Spacing="2" Margin="8,6"
+                                                        VerticalAlignment="Center">
+
+                                               <Button Padding="6,4"
+                                               Background="Transparent"
+                                               BorderThickness="0"
+                                               ToolTip.Tip="Редактировать"
+                                               Command="{Binding $parent[ItemsControl].DataContext.EditMachineCommand}"
+                                               CommandParameter="{Binding}">
+                                               <TextBlock Text="✏" FontSize="13" Foreground="#2196F3"/>
+                                               </Button>
+
+                                                <Button Padding="6,4"
+                                                        Background="Transparent"
+                                                        BorderThickness="0"
+                                                        ToolTip.Tip="Отвязать модем"
+                                                        Command="{Binding $parent[ItemsControl].DataContext.UnlinkModemCommand}"
+                                                        CommandParameter="{Binding}">
+                                                    <TextBlock Text="🔌" FontSize="13"
+                                                               Foreground="#FF9800"/>
+                                                </Button>
+                                                <Button Padding="6,4"
+                                                        Background="Transparent"
+                                                        BorderThickness="0"
+                                                        ToolTip.Tip="Удалить"
+                                                        Command="{Binding $parent[ItemsControl].DataContext.DeleteMachineCommand}"
+                                                        CommandParameter="{Binding}">
+                                                    <TextBlock Text="🗑" FontSize="13"
+                                                               Foreground="#f44336"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                    </DockPanel>
+                </Border>
+
+                <ScrollViewer IsVisible="{Binding !IsTableView}">
+                    <ItemsControl ItemsSource="{Binding Machines}" Margin="0,4,0,0">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:Machine">
+                                <Border Width="255" Margin="0,0,12,12" Padding="14"
+                                        Background="White" CornerRadius="6"
+                                        BorderBrush="#e4e4e4" BorderThickness="1"
+                                        BoxShadow="0 1 4 0 #0D000000">
+                                    <StackPanel Spacing="10">
+
+                                        <DockPanel>
+                                            <Border DockPanel.Dock="Right"
+                                                    Background="#EEF7FF"
+                                                    CornerRadius="3" Padding="5,2">
+                                                <TextBlock Text="{Binding Id, StringFormat='#{0}'}"
+                                                           FontSize="10" Foreground="#2196F3"
+                                                           FontWeight="SemiBold"/>
+                                            </Border>
+                                            <TextBlock Text="{Binding Name}"
+                                                       FontSize="13" FontWeight="SemiBold"
+                                                       Foreground="#222"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       VerticalAlignment="Center"/>
+                                        </DockPanel>
+
+                                        <Border Height="1" Background="#f0f0f0"/>
+
+                                        <StackPanel Spacing="6">
+                                            <Grid ColumnDefinitions="72,*">
+                                                <TextBlock Grid.Column="0" Text="Модель"
+                                                           FontSize="11" Foreground="#aaa"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding ModelName}"
+                                                           FontSize="11" Foreground="#333"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="72,*">
+                                                <TextBlock Grid.Column="0" Text="Компания"
+                                                           FontSize="11" Foreground="#aaa"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Company.Name}"
+                                                           FontSize="11" Foreground="#2196F3"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="72,*">
+                                                <TextBlock Grid.Column="0" Text="Модем"
+                                                           FontSize="11" Foreground="#aaa"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding ModemId}"
+                                                           FontSize="11" Foreground="#333"/>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="72,*">
+                                                <TextBlock Grid.Column="0" Text="Адрес"
+                                                           FontSize="11" Foreground="#aaa"/>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding LocationAddress}"
+                                                           FontSize="11" Foreground="#333"
+                                                           TextWrapping="Wrap"/>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="72,*">
+                                                <TextBlock Grid.Column="0" Text="В работе с"
+                                                           FontSize="11" Foreground="#aaa"/>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding CommissioningDate}"
+                                                           FontSize="11" Foreground="#333"/>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <Border Height="1" Background="#f0f0f0"/>
+
+                                        <StackPanel Orientation="Horizontal" Spacing="4"
+                                                    HorizontalAlignment="Right">
+                                            <Button Padding="7,4" CornerRadius="4"
+                                                    Background="#EEF7FF" BorderThickness="0"
+                                                    ToolTip.Tip="Редактировать">
+                                                <TextBlock Text="✏" FontSize="12"
+                                                           Foreground="#2196F3"/>
+                                            </Button>
+                                            <Button Padding="7,4" CornerRadius="4"
+                                                    Background="#FFF8EE" BorderThickness="0"
+                                                    ToolTip.Tip="Отвязать модем"
+                                                    Command="{Binding $parent[ItemsControl].DataContext.UnlinkModemCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <TextBlock Text="🔌" FontSize="12"
+                                                           Foreground="#FF9800"/>
+                                            </Button>
+                                            <Button Padding="7,4" CornerRadius="4"
+                                                    Background="#FFF0F0" BorderThickness="0"
+                                                    ToolTip.Tip="Удалить"
+                                                    Command="{Binding $parent[ItemsControl].DataContext.DeleteMachineCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <TextBlock Text="🗑" FontSize="12"
+                                                           Foreground="#f44336"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

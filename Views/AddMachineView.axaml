@@ -1,0 +1,350 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Views.AddMachineView">
+<UserControl.Styles>
+    <FluentTheme />
+    
+    <Style Selector="TextBox">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="#1a1a2e"/>
+        <Setter Property="CaretBrush" Value="#1a1a2e"/>
+        <Setter Property="SelectionBrush" Value="#90CAF9"/>
+    </Style>
+
+    <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="White"/>
+    </Style>
+
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="White"/>
+    </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#cccccc"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="2"/>
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#cccccc"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="CheckBox">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="DatePicker">
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Margin" Value="0,0,0,3"/>
+        </Style>
+        <Style Selector="TextBlock.required">
+            <Setter Property="Foreground" Value="#e74c3c"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer Background="#f0f3f7" VerticalScrollBarVisibility="Auto">
+        <Border Margin="16" Background="White" CornerRadius="4"
+                BorderBrush="#d0d7e2" BorderThickness="1"
+                BoxShadow="0 1 4 0 #10000000">
+            <StackPanel>
+
+                <Border Background="#e8eef5" BorderBrush="#d0d7e2"
+                        BorderThickness="0,0,0,1" Padding="16,12">
+                    <TextBlock Text="Создание торгового автомата"
+                               FontSize="14" FontWeight="SemiBold"
+                               Foreground="#2c3e6b"/>
+                </Border>
+
+                <StackPanel Margin="16" Spacing="12">
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Название ТА " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbName" Foreground="Black"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Производитель ТА " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <ComboBox x:Name="CbManufacturer" Foreground="Black">
+                                <ComboBoxItem Content="Necta" IsSelected="True"/>
+                                <ComboBoxItem Content="Jofemar" />
+                                <ComboBoxItem Content="Crane" />
+                                <ComboBoxItem Content="Другой" />
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Модель ТА " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbModelName" Foreground="Black"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Режим работы " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <ComboBox Foreground="Black">
+                                <ComboBoxItem Content="Стандартный" IsSelected="True" Foreground="Black"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Производитель ТА (Slave) " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox Text="-" IsEnabled="False" Background="#f5f5f5"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Модель ТА (Slave) " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox Text="-" IsEnabled="False" Background="#f5f5f5"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Адрес " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbAddress" Foreground="Black"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Место " Foreground="Black" Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbLocation"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Страна" Classes="label"/>        
+                            <TextBox x:Name="TbCountry" Foreground="Black"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Серийный номер " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbSerial" Foreground="Black"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Инвентарный номер " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbInventory" Foreground="Black"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Дата производства " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <DatePicker x:Name="DpManufacture"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Дата ввода в эксплуатацию " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <DatePicker x:Name="DpCommissioning"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Дата последней поверки" Classes="label"/>
+                            <DatePicker x:Name="DpCalibration"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Интервал поверки (мес.)" Classes="label"/>
+                            <TextBox x:Name="TbCalibrationInterval" Foreground="Black"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Часовой пояс " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <ComboBox Foreground="Black">
+                                <ComboBoxItem Content="UTC + 3" IsSelected="True"/>
+                                <ComboBoxItem Content="UTC + 0"/>
+                                <ComboBoxItem Content="UTC + 1"/>
+                                <ComboBoxItem Content="UTC + 2"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Время работы (часы)" Classes="label"/>
+                            <TextBox x:Name="TbWorkHours"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Модем " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <TextBox x:Name="TbModem" Foreground="Black"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Ресурс (часов всего)" Classes="label"/>
+                            <TextBox x:Name="TbResourceHours" Foreground="Black"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Время обслуживания (часов)" Classes="label"/>
+                            <TextBox x:Name="TbServiceHours" Foreground="Black"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Приоритет обслуживания " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <ComboBox x:Name="CbPriority" Foreground="Black">
+                                <ComboBoxItem Content="Средний" IsSelected="True"/>
+                                <ComboBoxItem Content="Высокий"/>
+                                <ComboBoxItem Content="Низкий"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,2*">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Техник-оператор" Classes="label"/>
+                            <ComboBox Foreground="Black">
+                                <ComboBoxItem Content="Не задан" IsSelected="True"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Платежные системы " Classes="label"/>
+                                <TextBlock Text="*" Classes="required"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="12" Height="28"
+                                        VerticalAlignment="Center">
+                                <CheckBox x:Name="CbCoin"     Content="Монетопр."       Foreground="Black" IsChecked="True"/>
+                                <CheckBox x:Name="CbBill"     Content="Купюропр."       Foreground="Black" IsChecked="True"/>
+                                <CheckBox x:Name="CbCashless" Content="Модуль б/н опл." Foreground="Black"/>
+                                <CheckBox x:Name="CbQr"       Content="QR-платежи"      Foreground="Black"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="RFID карты обслуживания" Classes="label"/>
+                            <TextBox x:Name="TbRfidService" Foreground="Black"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="RFID карты инкассации" Classes="label"/>
+                            <TextBox x:Name="TbRfidCollection" Foreground="Black"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="RFID карты загрузки" Classes="label"/>
+                            <TextBox x:Name="TbRfidLoad" Foreground="Black"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,16,*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Id кассы Kit Online (только в случае жесткой привязки)"
+                                       Classes="label" TextWrapping="Wrap"/>
+                            <TextBox x:Name="TbKitId" Margin="0,6,0,0" Foreground="Black"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel>
+                        <TextBlock Text="Примечания" Classes="label"/>
+                        <TextBox x:Name="TbNotes"
+                                 Height="70" AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 VerticalContentAlignment="Top"
+                                 Padding="6,6" Foreground="Black"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,6,0,4">
+                        <Button x:Name="BtnCreate"
+                                Content="Создать"
+                                Padding="20,7"
+                                Background="#3d7fc1"
+                                Foreground="White"
+                                BorderThickness="0"
+                                CornerRadius="3"
+                                FontSize="12"
+                                FontFamily="Segoe UI, Arial, sans-serif"/>
+                        <Button x:Name="BtnCancel"
+                                Content="Отменить"
+                                Padding="20,7"
+                                Background="White"
+                                Foreground="Black"
+                                BorderBrush="#cccccc"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                FontSize="12"
+                                FontFamily="Segoe UI, Arial, sans-serif"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>
